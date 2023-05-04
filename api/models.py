@@ -25,6 +25,11 @@ class Cake(models.Model):
     image=models.ImageField(upload_to="images",default=True)
     price=models.PositiveIntegerField()
 
+
+    @property
+    def cake_review(self):
+        return Reviews.objects.filter(cake=self)
+
     def __str__(self):
         return self.name
     
@@ -45,6 +50,7 @@ class PlaceOrder(models.Model):
     expdate=curDate+datetime.timedelta(days=1)
     expected_deliverydate=models.DateTimeField(default=expdate)
     address=models.CharField(max_length=100,null=True)
+    matter=models.CharField(max_length=100,null=True)
 
 class AddtoCart(models.Model):
     cake=models.ForeignKey(Cake,on_delete=models.CASCADE)
